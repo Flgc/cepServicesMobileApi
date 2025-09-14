@@ -37,4 +37,11 @@ public class Address {
     public String getIbge() {
         return ibge;
     }
+
+    public String format(){
+       return this.street.concat("\n")
+               .concat(this.neighborhood)
+               .concat("\n")
+               .concat(this.city);
+    }
 }

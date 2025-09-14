@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                     Address address = response.body();
 
                     // Show information return in textViewInformation
-                    textViewInformation.setText(address.getNeighborhood());
+                    textViewInformation.setText(address.format());
 
                 } else {
                     Toast.makeText(MainActivity.this,
