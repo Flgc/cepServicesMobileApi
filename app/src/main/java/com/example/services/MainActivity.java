@@ -1,6 +1,10 @@
 package com.example.services;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -16,6 +20,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,13 +34,32 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        // Create the variable for the Views (xml)
+        EditText editTextNumberCep =  findViewById(R.id.editTextNumberCep);
+        Button buttonSearch =  findViewById(R.id.buttonSearch);
+
+        buttonSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String zipCodNumber = editTextNumberCep.getText().toString();
+                consult(zipCodNumber);
+            }
+        });
     }
 
     /* Retrofit turns your HTTP API into a Java (or Kotlin) interface. */
     private void consult(String zipCodNumber) {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.URL).build();
+
+        TextView textViewInformation = findViewById(R.id.textViewInformation);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constants.URL)
+                .addConverterFactory(GsonConverterFactory.create()) // convert json implemented
+                .build();
 
         InverTextoApi inverTextoApi = retrofit.create(InverTextoApi.class);
+
         Call<Address> call = inverTextoApi.getAddress(
                 zipCodNumber, Constants.TOKEN
         );
@@ -46,7 +70,9 @@ public class MainActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
 
                     Address address = response.body();
+
                     // Show information return in textViewInformation
+                    textViewInformation.setText(address.getNeighborhood());
 
                 } else {
                     Toast.makeText(MainActivity.this,
