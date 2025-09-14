@@ -41,6 +41,10 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-    // Library installation - 14-9-25 - attention downgrade for version implementation 3.1.0-SNAPSHOT
+    /* Library installation - 14-9-25 - https://square.github.io/retrofit/
+     - attention downgrade for version implementation 3.1.0-SNAPSHOT
+     */
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
+
+
 }
