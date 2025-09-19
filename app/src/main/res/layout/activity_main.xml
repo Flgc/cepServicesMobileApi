@@ -41,7 +41,9 @@
             android:layout_height="50dp"
             android:background="@drawable/input"
             android:ems="10"
-            android:inputType="number" />
+            android:inputType="number"
+            android:paddingLeft="15dp" />
+
 
         <Button
             android:id="@+id/buttonSearch"

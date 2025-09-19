@@ -60,8 +60,9 @@ public class MainActivity extends AppCompatActivity {
 
         InverTextoApi inverTextoApi = retrofit.create(InverTextoApi.class);
 
+        String token = BuildConfig.API_KEY;
         Call<Address> call = inverTextoApi.getAddress(
-                zipCodNumber, Constants.TOKEN
+                zipCodNumber, token
         );
 
         call.enqueue(new Callback<Address>() {

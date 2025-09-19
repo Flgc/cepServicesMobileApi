@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
 }
@@ -5,6 +7,10 @@ plugins {
 android {
     namespace = "com.example.services"
     compileSdk = 36
+
+    buildFeatures{
+        buildConfig = true;
+    }
 
     defaultConfig {
         applicationId = "com.example.services"
@@ -14,6 +20,16 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // Environment variable for token
+        val properties = Properties()
+        val propertiesFile = rootProject.file("local.properties")
+        if (propertiesFile.exists()) {
+            propertiesFile.inputStream().use { input -> properties.load( input)}
+        }
+
+        buildConfigField("String", "API_KEY", "\"${properties.
+        getProperty("API_KEY")}\"")
     }
 
     buildTypes {
@@ -41,9 +57,8 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-    /*
-       Library installation - 14-9-25 - https://square.github.io/retrofit/
-       - attention downgrade for version implementation 3.1.0-SNAPSHOT
+    /* Library installation - 14-9-25 - https://square.github.io/retrofit/
+     - attention downgrade for version implementation 3.1.0-SNAPSHOT
      */
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
 
@@ -51,6 +66,6 @@ dependencies {
       Library install - 14-9-25 - https://square.github.io/retrofit/configuration/
       - attention downgrade for version implementation
     */
-
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+
 }
