@@ -3,4 +3,5 @@
     <string name="information">Information</string>
     <string name="search">Search</string>
     <string name="enter_the_zip">Enter the zip code to find the address</string>
+    <string name="cnpj">Cnpj</string>
 </resources>

@@ -53,10 +53,20 @@
             android:layout_marginBottom="16dp"
             android:text="@string/search" />
 
+        <Button
+            android:id="@+id/btCnpj"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/cnpj" />
+
         <TextView
             android:id="@+id/textViewInformation"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="214dp"
+            android:background="@drawable/input"
+            android:ems="10"
             android:text="@string/information"
             android:textAlignment="center"
             android:textSize="24sp" />

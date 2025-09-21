@@ -8,7 +8,7 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /* Retrofit turns your HTTP API into a Java (or Kotlin) interface. */
-public interface InverTextoApi {
+public interface InverTextoCepApi {
     @GET("/v1/cep/{zipCodNumber}")
     Call<Address> getAddress(
             @Path("zipCodNumber") String zipCodNumber,

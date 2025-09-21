@@ -14,9 +14,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.services.api.InverTextoCepApi;
-import com.example.services.api.InverTextoCnpjApi;
 import com.example.services.model.Address;
-import com.example.services.model.Cnpj;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,7 +22,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class CepActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,82 +36,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
         // Create the variable for the Views (xml)
-
-        // This button will be handled on the screen
+        EditText editTextNumberCep =  findViewById(R.id.editTextNumberCep);
         Button buttonSearch =  findViewById(R.id.buttonSearch);
-        buttonSearch.setOnClickListener(this);
 
-        Button btCnpj = findViewById(R.id.btCnpj);
-        btCnpj.setOnClickListener(this);
-
-        // Implement with on button just "extends AppCompatActivity" in public class
-        /*
-           buttonSearch.setOnClickListener(new View.OnClickListener() {
+        buttonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String zipCodNumber = editTextNumberCep.getText().toString();
                 consult(zipCodNumber);
             }
-        });*/
-    }
-
-    // Implement with two or more button necessary implements View.OnClickListener in public class
-    @Override
-    public void onClick(View view) {
-        EditText editTextNumberCep =  findViewById(R.id.editTextNumberCep);
-        String zipCodNumber = editTextNumberCep.getText().toString();
-
-        if (view.getId() == R.id.buttonSearch) {
-            consultCep(zipCodNumber);
-        } else if (view.getId() == R.id.btCnpj) {
-            consultCnpj(zipCodNumber);
-        }
-    }
-
-    /* Retrofit turns your HTTP API into a Java (or Kotlin) interface. */
-    private void consultCnpj(String cnpjCodNumber) {
-
-        TextView tView = findViewById(R.id.textViewInformation);
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.URL)
-                .addConverterFactory(GsonConverterFactory.create()) // convert json implemented
-                .build();
-
-        InverTextoCnpjApi inverTextoCnpjApi = retrofit.create(InverTextoCnpjApi.class);
-
-        String token = BuildConfig.API_KEY;
-        Call<Cnpj> call = inverTextoCnpjApi.getCnpj(
-                cnpjCodNumber, token
-        );
-
-        call.enqueue(new Callback<Cnpj>() {
-            @Override
-            public void onResponse(Call<Cnpj> call, Response<Cnpj> response) {
-                if (response.isSuccessful()) {
-
-                    Cnpj cnpj = response.body();
-
-                    // Show information return in textViewInformation
-                    tView.setText(cnpj.formatCnpj());
-
-                } else {
-                    Toast.makeText(MainActivity.this,
-                            "Error searching for information, checking cnpj code!",
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Cnpj> call, Throwable throwable) {
-                Toast.makeText(MainActivity.this,
-                        "Check your internet connection!",
-                        Toast.LENGTH_SHORT).show();
-            }
         });
     }
 
-    private void consultCep(String zipCodNumber) {
+    /* Retrofit turns your HTTP API into a Java (or Kotlin) interface. */
+    private void consult(String zipCodNumber) {
 
         TextView textViewInformation = findViewById(R.id.textViewInformation);
 
@@ -140,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     textViewInformation.setText(address.format());
 
                 } else {
-                    Toast.makeText(MainActivity.this,
+                    Toast.makeText(CepActivity.this,
                             "Error searching for information, checking postal code!",
                             Toast.LENGTH_SHORT).show();
                 }
@@ -148,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onFailure(Call<Address> call, Throwable throwable) {
-                Toast.makeText(MainActivity.this,
+                Toast.makeText(CepActivity.this,
                         "Check your internet connection!",
                         Toast.LENGTH_SHORT).show();
             }
